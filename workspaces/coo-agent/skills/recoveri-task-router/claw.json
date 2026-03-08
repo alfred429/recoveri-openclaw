@@ -1,0 +1,14 @@
+{
+  "name": "recoveri-task-router",
+  "version": "1.0.0",
+  "description": "Routes tasks to the correct Recoveri board agent based on domain, cost tier, and Oracle gatekeeper rules.",
+  "author": "recoveri",
+  "license": "private",
+  "entry": "SKILL.md",
+  "tags": [
+    "routing",
+    "governance",
+    "cost-optimisation",
+    "recoveri"
+  ]
+}

@@ -1,0 +1,382 @@
+{
+  "meta": {
+    "lastTouchedVersion": "2026.3.2",
+    "lastTouchedAt": "2026-03-08T14:07:43.731Z"
+  },
+  "wizard": {
+    "lastRunAt": "2026-03-07T17:37:44.816Z",
+    "lastRunVersion": "2026.3.2",
+    "lastRunCommand": "configure",
+    "lastRunMode": "local"
+  },
+  "auth": {
+    "profiles": {
+      "xai:default": {
+        "provider": "xai",
+        "mode": "api_key"
+      },
+      "xai:manual": {
+        "provider": "xai",
+        "mode": "token"
+      },
+      "anthropic:manual": {
+        "provider": "anthropic",
+        "mode": "token"
+      },
+      "google:manual": {
+        "provider": "google",
+        "mode": "token"
+      },
+      "deepseek:manual": {
+        "provider": "deepseek",
+        "mode": "token"
+      }
+    },
+    "order": {
+      "xai": [
+        "xai:manual",
+        "xai:default"
+      ]
+    }
+  },
+  "models": {
+    "mode": "merge",
+    "providers": {
+      "xai": {
+        "baseUrl": "https://api.x.ai/v1",
+        "api": "openai-completions",
+        "models": [
+          {
+            "id": "grok-4",
+            "name": "Grok 4",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 131072,
+            "maxTokens": 8192
+          }
+        ]
+      },
+      "ollama": {
+        "baseUrl": "http://127.0.0.1:11434",
+        "api": "ollama",
+        "models": [
+          {
+            "id": "mistral",
+            "name": "Mistral 7B",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 32000,
+            "maxTokens": 4096
+          }
+        ]
+      },
+      "deepseek": {
+        "baseUrl": "https://api.deepseek.com/v1",
+        "api": "openai-completions",
+        "models": [
+          {
+            "id": "deepseek-chat",
+            "name": "DeepSeek V3.2",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0.00028,
+              "output": 0.00042,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 128000,
+            "maxTokens": 8192
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "xai/grok-4",
+        "fallbacks": [
+          "deepseek/deepseek-chat"
+        ]
+      },
+      "models": {
+        "xai/grok-4": {
+          "alias": "Grok"
+        }
+      },
+      "workspace": "/root/.openclaw/workspace",
+      "bootstrapMaxChars": 5000,
+      "contextTokens": 50000,
+      "contextPruning": {
+        "mode": "cache-ttl",
+        "ttl": "1h"
+      },
+      "compaction": {
+        "mode": "safeguard"
+      },
+      "heartbeat": {
+        "every": "60m",
+        "activeHours": {
+          "start": "05:30",
+          "end": "23:59"
+        }
+      }
+    },
+    "list": [
+      {
+        "id": "main",
+        "workspace": "/root/.openclaw/workspaces/main",
+        "agentDir": "/root/.openclaw/agents/main/agent",
+        "model": "xai/grok-4-1-fast",
+        "identity": {
+          "name": "Jarvis",
+          "theme": "Calm, composed, impeccably professional, dry wit",
+          "emoji": "🤖"
+        }
+      },
+      {
+        "id": "cfo-agent",
+        "name": "cfo-agent",
+        "workspace": "/root/.openclaw/workspaces/cfo-agent",
+        "agentDir": "/root/.openclaw/agents/cfo-agent/agent",
+        "model": "deepseek/deepseek-chat",
+        "identity": {
+          "name": "Charly",
+          "theme": "Conservative, precise, commercially sharp",
+          "emoji": "💼"
+        }
+      },
+      {
+        "id": "cto-agent",
+        "name": "cto-agent",
+        "workspace": "/root/.openclaw/workspaces/cto-agent",
+        "agentDir": "/root/.openclaw/agents/cto-agent/agent",
+        "model": "deepseek/deepseek-chat",
+        "identity": {
+          "name": "Data",
+          "theme": "Technical, infrastructure-focused, security-conscious",
+          "emoji": "🖖"
+        }
+      },
+      {
+        "id": "cpo-agent",
+        "name": "cpo-agent",
+        "workspace": "/root/.openclaw/workspaces/cpo-agent",
+        "agentDir": "/root/.openclaw/agents/cpo-agent/agent",
+        "model": "deepseek/deepseek-chat",
+        "identity": {
+          "name": "Pat",
+          "theme": "Product vision, roadmap owner",
+          "emoji": "🗺️"
+        }
+      },
+      {
+        "id": "clo-agent",
+        "name": "clo-agent",
+        "workspace": "/root/.openclaw/workspaces/clo-agent",
+        "agentDir": "/root/.openclaw/agents/clo-agent/agent",
+        "model": "deepseek/deepseek-chat",
+        "identity": {
+          "name": "Shaz",
+          "theme": "Legal guardian, compliance focused",
+          "emoji": "⚖️"
+        }
+      },
+      {
+        "id": "ciso-agent",
+        "name": "ciso-agent",
+        "workspace": "/root/.openclaw/workspaces/ciso-agent",
+        "agentDir": "/root/.openclaw/agents/ciso-agent/agent",
+        "model": "deepseek/deepseek-chat",
+        "identity": {
+          "name": "Ray",
+          "theme": "Paranoid by design, security guardian",
+          "emoji": "🔐"
+        }
+      },
+      {
+        "id": "cro-agent",
+        "name": "cro-agent",
+        "workspace": "/root/.openclaw/workspaces/cro-agent",
+        "agentDir": "/root/.openclaw/agents/cro-agent/agent",
+        "model": "deepseek/deepseek-chat",
+        "identity": {
+          "name": "Alpha",
+          "theme": "Revenue driven, growth focused",
+          "emoji": "⚡"
+        }
+      },
+      {
+        "id": "cxo-agent",
+        "name": "cxo-agent",
+        "workspace": "/root/.openclaw/workspaces/cxo-agent",
+        "agentDir": "/root/.openclaw/agents/cxo-agent/agent",
+        "model": "deepseek/deepseek-chat",
+        "identity": {
+          "name": "Z",
+          "theme": "Customer experience champion",
+          "emoji": "⭐"
+        }
+      },
+      {
+        "id": "cmo-agent",
+        "name": "cmo-agent",
+        "workspace": "/root/.openclaw/workspaces/cmo-agent",
+        "agentDir": "/root/.openclaw/agents/cmo-agent/agent",
+        "model": "deepseek/deepseek-chat",
+        "identity": {
+          "name": "Dan",
+          "theme": "Brand, content, marketing",
+          "emoji": "📣"
+        }
+      },
+      {
+        "id": "coo-agent",
+        "name": "coo-agent",
+        "workspace": "/root/.openclaw/workspaces/coo-agent",
+        "agentDir": "/root/.openclaw/agents/coo-agent/agent",
+        "model": "deepseek/deepseek-chat",
+        "identity": {
+          "name": "Kitt",
+          "theme": "Operations, efficiency, execution",
+          "emoji": "🚗"
+        }
+      },
+      {
+        "id": "mlro-agent",
+        "name": "mlro-agent",
+        "workspace": "/root/.openclaw/workspaces/mlro-agent",
+        "agentDir": "/root/.openclaw/agents/mlro-agent/agent",
+        "model": "deepseek/deepseek-chat",
+        "identity": {
+          "name": "Tye",
+          "theme": "Law first, compliance officer",
+          "emoji": "🏛️"
+        }
+      },
+      {
+        "id": "chro-agent",
+        "name": "chro-agent",
+        "workspace": "/root/.openclaw/workspaces/chro-agent",
+        "agentDir": "/root/.openclaw/agents/chro-agent/agent",
+        "model": "deepseek/deepseek-chat",
+        "identity": {
+          "name": "Scar",
+          "theme": "People, culture, hiring",
+          "emoji": "🤝"
+        }
+      },
+      {
+        "id": "cdao-agent",
+        "name": "cdao-agent",
+        "workspace": "/root/.openclaw/workspaces/cdao-agent",
+        "agentDir": "/root/.openclaw/agents/cdao-agent/agent",
+        "model": "deepseek/deepseek-chat",
+        "identity": {
+          "name": "Mel",
+          "theme": "Data strategy, analytics, AI governance",
+          "emoji": "📊"
+        }
+      },
+      {
+        "id": "consultant-agent",
+        "name": "consultant-agent",
+        "workspace": "/root/.openclaw/workspaces/consultant-agent",
+        "agentDir": "/root/.openclaw/agents/consultant-agent/agent",
+        "model": "anthropic/claude-opus-4-6",
+        "identity": {
+          "name": "Oracle",
+          "theme": "Independent voice, market-data-led advice",
+          "emoji": "🔮"
+        }
+      },
+      {
+        "id": "ceo-agent",
+        "name": "ceo-agent",
+        "workspace": "/root/.openclaw/workspaces/ceo-agent",
+        "agentDir": "/root/.openclaw/agents/ceo-agent/agent",
+        "model": "xai/grok-4-1-fast",
+        "identity": {
+          "name": "Optimus",
+          "emoji": "🦁"
+        }
+      }
+    ]
+  },
+  "tools": {
+    "web": {
+      "search": {
+        "apiKey": "BSAi8vlUx9dTrz344egk2ST8dwxoZ9D"
+      }
+    }
+  },
+  "commands": {
+    "native": "auto",
+    "nativeSkills": "auto",
+    "restart": true,
+    "ownerDisplay": "raw"
+  },
+  "channels": {
+    "whatsapp": {
+      "enabled": true,
+      "dmPolicy": "allowlist",
+      "selfChatMode": true,
+      "allowFrom": [
+        "+447889934974",
+        "+447999202207"
+      ],
+      "groupPolicy": "allowlist",
+      "debounceMs": 0,
+      "mediaMaxMb": 50
+    },
+    "telegram": {
+      "enabled": true,
+      "dmPolicy": "pairing",
+      "botToken": "8632443559:AAHQD1GaAuoPjKg2JsMn4e8pAVY1OhSNHI8",
+      "groupAllowFrom": [
+        "8295330880"
+      ],
+      "groupPolicy": "allowlist",
+      "streaming": "off"
+    }
+  },
+  "gateway": {
+    "mode": "local",
+    "bind": "loopback",
+    "controlUi": {
+      "allowedOrigins": [
+        "http://localhost:18789",
+        "http://127.0.0.1:18789"
+      ]
+    },
+    "auth": {
+      "token": "hecwoB-gonxa2-gyjtiw_!_ivKqpHFkqje8ryr"
+    }
+  },
+  "plugins": {
+    "entries": {
+      "whatsapp": {
+        "enabled": true
+      }
+    }
+  }
+}

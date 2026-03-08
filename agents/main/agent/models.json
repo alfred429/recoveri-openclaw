@@ -1,0 +1,100 @@
+{
+  "providers": {
+    "ollama": {
+      "baseUrl": "http://127.0.0.1:11434",
+      "api": "ollama",
+      "models": [
+        {
+          "id": "mistral",
+          "name": "Mistral 7B",
+          "reasoning": false,
+          "input": [
+            "text"
+          ],
+          "cost": {
+            "input": 0,
+            "output": 0,
+            "cacheRead": 0,
+            "cacheWrite": 0
+          },
+          "contextWindow": 32000,
+          "maxTokens": 4096,
+          "api": "ollama"
+        }
+      ],
+      "apiKey": "ollama-local"
+    },
+    "xai": {
+      "baseUrl": "https://api.x.ai/v1",
+      "api": "openai-completions",
+      "models": [
+        {
+          "id": "grok-4",
+          "name": "Grok 4",
+          "reasoning": false,
+          "input": [
+            "text"
+          ],
+          "cost": {
+            "input": 0,
+            "output": 0,
+            "cacheRead": 0,
+            "cacheWrite": 0
+          },
+          "contextWindow": 131072,
+          "maxTokens": 8192,
+          "api": "openai-completions"
+        }
+      ],
+      "apiKey": "xai-QeeB2m0TjcYoRQ4xXjQ7pGy1TYD8IjhazWWw2a70mSDo1BKwf3OTrSZCmML1kU3GlvGWOolFm4bWlA2e"
+    },
+    "deepseek": {
+      "baseUrl": "https://api.deepseek.com/v1",
+      "api": "openai-completions",
+      "models": [
+        {
+          "id": "deepseek-chat",
+          "name": "DeepSeek V3.2",
+          "reasoning": false,
+          "input": [
+            "text"
+          ],
+          "cost": {
+            "input": 0.00028,
+            "output": 0.00042,
+            "cacheRead": 0,
+            "cacheWrite": 0
+          },
+          "contextWindow": 128000,
+          "maxTokens": 8192,
+          "api": "openai-completions"
+        }
+      ],
+      "apiKey": "sk-ce73db8c948e4d3692b9dced32aee99f"
+    },
+    "qwen": {
+      "baseUrl": "https://dashscope-intl.aliyuncs.com/compatible-mode/v1",
+      "apiKey": "sk-8bbf8840c5b24bb792c1aef33a071946",
+      "api": "openai-completions",
+      "models": [
+        {
+          "id": "qwen3.5-flash",
+          "name": "Qwen 3.5 Flash",
+          "api": "openai-completions",
+          "reasoning": false,
+          "input": [
+            "text"
+          ],
+          "cost": {
+            "input": 0,
+            "output": 0,
+            "cacheRead": 0,
+            "cacheWrite": 0
+          },
+          "contextWindow": 1000000,
+          "maxTokens": 8192
+        }
+      ]
+    }
+  }
+}
