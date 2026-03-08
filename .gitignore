@@ -1,0 +1,15 @@
+# NEVER commit secrets
+.env
+*.bak
+agents/*/agent/auth-profiles.json
+credentials/
+logs/
+agents/*/sessions/
+*.jsonl
+
+# Keep these
+!workspace/
+!workspaces/
+!skills/
+!agents/*/agent/SOUL.md
+!agents/*/agent/IDENTITY.md

@@ -1,0 +1,8 @@
+{
+  "name": "recoveri-oracle-gatekeeper",
+  "version": "1.0.0",
+  "description": "Cost control checklist for routing tasks to Oracle (Claude Opus).",
+  "author": "recoveri",
+  "license": "private",
+  "entry": "SKILL.md"
+}
