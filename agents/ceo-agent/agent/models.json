@@ -22,7 +22,7 @@
           "api": "ollama"
         }
       ],
-      "apiKey": "ollama-local"
+      "apiKey": "***MASKED***"
     },
     "xai": {
       "baseUrl": "https://api.x.ai/v1",
@@ -42,11 +42,10 @@
             "cacheWrite": 0
           },
           "contextWindow": 131072,
-          "maxTokens": 8192,
-          "api": "openai-completions"
+          "maxTokens": 8192
         }
       ],
-      "apiKey": "xai-BeabmMMPX5h0hzQMMGpEVkSAni0PiF7nuDR5CW9VEjZBCEZZiyuB2YcwKzVvWNtMnhoRktGpvJH2L4Hq"
+      "apiKey": "XAI_API_KEY"
     },
     "deepseek": {
       "baseUrl": "https://api.deepseek.com/v1",
@@ -66,11 +65,73 @@
             "cacheWrite": 0
           },
           "contextWindow": 128000,
-          "maxTokens": 8192,
-          "api": "openai-completions"
+          "maxTokens": 8192
         }
       ],
-      "apiKey": "sk-ce73db8c948e4d3692b9dced32aee99f"
+      "apiKey": "DEEPSEEK_API_KEY"
+    },
+    "openai": {
+      "baseUrl": "https://api.openai.com/v1",
+      "api": "openai-completions",
+      "apiKey": "${OPENAI_API_KEY}",
+      "models": [
+        {
+          "id": "gpt-5-mini",
+          "name": "GPT-5 Mini",
+          "reasoning": false,
+          "input": [
+            "text"
+          ],
+          "cost": {
+            "input": 0,
+            "output": 0,
+            "cacheRead": 0,
+            "cacheWrite": 0
+          },
+          "contextWindow": 200000,
+          "maxTokens": 8192
+        },
+        {
+          "id": "gpt-5.4",
+          "name": "GPT-5.4",
+          "reasoning": true,
+          "input": [
+            "text"
+          ],
+          "cost": {
+            "input": 0,
+            "output": 0,
+            "cacheRead": 0,
+            "cacheWrite": 0
+          },
+          "contextWindow": 200000,
+          "maxTokens": 8192
+        }
+      ]
+    },
+    "qwen": {
+      "baseUrl": "https://dashscope-intl.aliyuncs.com/compatible-mode/v1",
+      "apiKey": "QWEN_API_KEY",
+      "api": "openai-completions",
+      "models": [
+        {
+          "id": "qwen3.5-flash",
+          "name": "Qwen 3.5 Flash",
+          "api": "openai-completions",
+          "reasoning": false,
+          "input": [
+            "text"
+          ],
+          "cost": {
+            "input": 0,
+            "output": 0,
+            "cacheRead": 0,
+            "cacheWrite": 0
+          },
+          "contextWindow": 1000000,
+          "maxTokens": 8192
+        }
+      ]
     }
   }
 }

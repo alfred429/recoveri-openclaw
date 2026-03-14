@@ -1,15 +1,37 @@
-# NEVER commit secrets
+# --- Recoveri local runtime / machine state ---
 .env
-*.bak
-agents/*/agent/auth-profiles.json
+.env.*
+!.env.example
+
+devices/paired.json
+identity/device-auth.json
+
+memory/*.sqlite
+memory/*.sqlite-*
+
+telegram/update-offset-default.json
+telegram/command-hash-default-*.txt
+
+exec-approvals.json
+workspaces/main/shared/approval-state.json
+
+backups/
+media/
+
+agents/_archive/
+agents/_model_backup_*/
+
+**/*.bak
+**/*.bak.*
+openclaw.json.bak*
+
+workspaces/main/github-delta-audit.txt
+update-check.json
+
+# --- Additional local runtime / auth / logs ---
 credentials/
 logs/
 agents/*/sessions/
-*.jsonl
-
-# Keep these
-!workspace/
-!workspaces/
-!skills/
-!agents/*/agent/SOUL.md
-!agents/*/agent/IDENTITY.md
+agents/*/agent/auth-profiles.json
+workspaces/main/shared/APPROVAL_EVENTS.jsonl
+.gitignore.pre-sanitize-2026-03-14

@@ -46,7 +46,7 @@
           "api": "openai-completions"
         }
       ],
-      "apiKey": "xai-QeeB2m0TjcYoRQ4xXjQ7pGy1TYD8IjhazWWw2a70mSDo1BKwf3OTrSZCmML1kU3GlvGWOolFm4bWlA2e"
+      "apiKey": "XAI_API_KEY"
     },
     "deepseek": {
       "baseUrl": "https://api.deepseek.com/v1",
@@ -70,11 +70,11 @@
           "api": "openai-completions"
         }
       ],
-      "apiKey": "sk-ce73db8c948e4d3692b9dced32aee99f"
+      "apiKey": "DEEPSEEK_API_KEY"
     },
     "qwen": {
       "baseUrl": "https://dashscope-intl.aliyuncs.com/compatible-mode/v1",
-      "apiKey": "sk-8bbf8840c5b24bb792c1aef33a071946",
+      "apiKey": "QWEN_API_KEY",
       "api": "openai-completions",
       "models": [
         {

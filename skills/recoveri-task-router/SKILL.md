@@ -70,3 +70,12 @@ Every agent should understand relative costs:
 - Grok agents (Jarvis, Optimus): ~$0.20/$1.00 per 1M tokens -- use normally
 - Oracle: ~$5.00/$25.00 per 1M tokens -- use sparingly, gatekeeper rules apply
 - Total monthly budget target: under $40 for all agents combined
+
+## ETSY PRODUCT WORKFLOW
+| Domain | Route To | Notes |
+|--------|----------|-------|
+| Etsy research, listing copy, SEO tags | Alpha (CRO) | Read recoveri-etsy-workflow skill |
+| PDF/product creation, mockup images | Data (CTO) | Read recoveri-etsy-workflow skill |
+| Product review email to Boss | Alpha (CRO) | Uses gog gmail send with attachments |
+
+To start a new Etsy product: route to Alpha first. Alpha does research and listing copy, then hands to Data for creation.

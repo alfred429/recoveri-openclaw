@@ -1,6 +1,6 @@
 {
   "model": {
-    "primary": "xai/grok-4",
+    "primary": "qwen/qwen3.5-flash",
     "fallbacks": [
       "deepseek/deepseek-chat"
     ]

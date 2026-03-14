@@ -1,8 +1,8 @@
 {
   "model": {
+    "primary": "deepseek/deepseek-chat",
     "fallbacks": [
-      "deepseek/deepseek-chat"
-    ],
-    "primary": "xai/grok-4"
+      "xai/grok-4"
+    ]
   }
 }
