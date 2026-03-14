@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+staged="$(git diff --cached --name-only || true)"
+
+blocked_regex='(^|/)(\.env(\..*)?|credentials/|logs/|backups/|media/|devices/paired\.json|identity/device-auth\.json|memory/.*\.sqlite([.-].*)?$|telegram/update-offset-default\.json|telegram/command-hash-default-.*\.txt|exec-approvals\.json|workspaces/[^/]+/\.openclaw/|__pycache__/|.*\.pyc$|.*\.bak(\..*)?$|sessions/)'
+
+blocked="$(printf "%s\n" "$staged" | grep -E "$blocked_regex" || true)"
+
+if [ -n "$blocked" ]; then
+  echo "[BLOCKED] Refusing commit because runtime or sensitive paths are staged:"
+  printf "%s\n" "$blocked"
+  echo
+  echo "Unstage these files and keep them local."
+  exit 1
+fi
+
+echo "[OK] Pre-commit check passed"

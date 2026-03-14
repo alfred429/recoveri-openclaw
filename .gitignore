@@ -35,3 +35,8 @@ agents/*/sessions/
 agents/*/agent/auth-profiles.json
 workspaces/main/shared/APPROVAL_EVENTS.jsonl
 .gitignore.pre-sanitize-2026-03-14
+
+# --- Python/cache and workspace runtime state ---
+**/__pycache__/
+*.pyc
+workspaces/*/.openclaw/
