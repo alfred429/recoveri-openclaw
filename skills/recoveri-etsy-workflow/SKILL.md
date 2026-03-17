@@ -1,3 +1,8 @@
+---
+name: recoveri-etsy-workflow
+description: Etsy digital product creation workflow for RecoveriStudio. Use when creating digital products for the Etsy shop — covers research and listing copy (Alpha), product PDF creation (Data), mockup generation (Data), quality review (Optimus), and Etsy upload preparation. Follow the step-by-step workflow in order.
+---
+
 # RecoveriStudio Etsy Product Workflow
 
 Read this skill when creating digital products for the RecoveriStudio Etsy shop.

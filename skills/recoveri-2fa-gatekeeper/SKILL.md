@@ -1,6 +1,6 @@
 ---
 name: recoveri-2fa-gatekeeper
-description: internal recoveri skill for step-up approval and two-factor gating of protected actions. use when jarvis or another recoveri agent needs to gate a sensitive action behind a one-time approval challenge, deliver a 4-digit code to boss via telegram dm and email, verify the approval response, bind approval to the exact action, enforce expiry and retry limits, and write audit events.
+description: internal recoveri skill for step-up approval and two-factor gating of protected actions. use when neo or another recoveri agent needs to gate a sensitive action behind a one-time approval challenge, deliver a 4-digit code to boss via telegram dm and email, verify the approval response, bind approval to the exact action, enforce expiry and retry limits, and write audit events.
 ---
 
 # recoveri 2fa gatekeeper v0.1
