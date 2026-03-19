@@ -1,0 +1,10 @@
+{
+  "role": "consultant",
+  "report_to": "ceo-agent",
+  "report_to_name": "Optimus (CEO)",
+  "soul_file": "SOUL.md",
+  "identity_file": "IDENTITY.md",
+  "constitution": "../../workspace/shared/ENTERPRISE_SOUL.md",
+  "gatekeeper": "/root/gatekeeper/run_all.py",
+  "tier": "LOCAL_FREE"
+}

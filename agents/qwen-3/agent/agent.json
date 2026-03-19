@@ -1,0 +1,14 @@
+{
+  "model": {
+    "primary": "qwen/qwen3.5-122b-a10b",
+    "fallbacks": [
+      "qwen/qwen3.5-flash"
+    ]
+  },
+  "role": "content",
+  "report_to": "cro-agent",
+  "report_to_name": "Alpha (CRO)",
+  "soul_file": "SOUL.md",
+  "constitution": "../../workspace/shared/ENTERPRISE_SOUL.md",
+  "gatekeeper": "/root/gatekeeper/run_all.py"
+}

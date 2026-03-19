@@ -1,8 +1,10 @@
 {
   "model": {
-    "primary": "qwen/qwen3.5-flash",
+    "primary": "xai/grok-4-1-fast",
     "fallbacks": [
       "deepseek/deepseek-chat"
     ]
-  }
+  },
+  "constitution": "../../workspace/shared/ENTERPRISE_SOUL.md",
+  "gatekeeper": "/root/gatekeeper/run_all.py"
 }

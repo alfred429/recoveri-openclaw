@@ -1,0 +1,66 @@
+{
+  "version": 1,
+  "profiles": {
+    "xai:default": {
+      "type": "api_key",
+      "provider": "xai",
+      "disabled": true,
+      "note": "Archived agent \u2014 credentials stripped 2026-03-19"
+    },
+    "xai:manual": {
+      "type": "token",
+      "provider": "xai",
+      "disabled": true,
+      "note": "Archived agent \u2014 credentials stripped 2026-03-19"
+    },
+    "deepseek:manual": {
+      "type": "token",
+      "provider": "deepseek",
+      "disabled": true,
+      "note": "Archived agent \u2014 credentials stripped 2026-03-19"
+    },
+    "anthropic:manual": {
+      "type": "token",
+      "provider": "anthropic",
+      "disabled": true,
+      "note": "Archived agent \u2014 credentials stripped 2026-03-19"
+    },
+    "openai:manual": {
+      "type": "token",
+      "provider": "openai",
+      "disabled": true,
+      "note": "Archived agent \u2014 credentials stripped 2026-03-19"
+    },
+    "qwen-portal:manual": {
+      "type": "token",
+      "provider": "qwen-portal",
+      "disabled": true,
+      "note": "Archived agent \u2014 credentials stripped 2026-03-19"
+    }
+  },
+  "lastGood": {
+    "xai": "xai:manual"
+  },
+  "usageStats": {
+    "xai:manual": {
+      "errorCount": 0,
+      "lastUsed": 1773648210871
+    },
+    "xai:default": {
+      "errorCount": 1,
+      "failureCounts": {
+        "auth": 1
+      },
+      "lastFailureAt": 1773055754084,
+      "cooldownUntil": 1773055814084
+    },
+    "deepseek:manual": {
+      "errorCount": 1,
+      "failureCounts": {
+        "auth": 1
+      },
+      "lastFailureAt": 1773638646416,
+      "cooldownUntil": 1773638706416
+    }
+  }
+}

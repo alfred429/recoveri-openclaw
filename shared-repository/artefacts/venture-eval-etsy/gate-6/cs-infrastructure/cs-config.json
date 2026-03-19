@@ -1,0 +1,58 @@
+{
+  "version": "1.1.0",
+  "service": "recoveri-cs-responder",
+  "language": "en-GB",
+
+  "model": {
+    "primary": {
+      "provider": "deepseek",
+      "base_url": "https://api.deepseek.com/v1",
+      "model_id": "deepseek-chat",
+      "api_key_env": "DEEPSEEK_API_KEY"
+    },
+    "fallback": {
+      "provider": "ollama",
+      "base_url": "http://127.0.0.1:11434",
+      "model_id": "qwen2.5:7b",
+      "api_key_env": null
+    }
+  },
+
+  "paths": {
+    "shared_repository": "/root/shared-repository",
+    "skill_file": "/root/shared-repository/skills/recoveri-customer-service/SKILL.md",
+    "ticket_log": "/root/shared-repository/data/customer-service/tickets.jsonl",
+    "artefacts_dir": "/root/shared-repository/artefacts/venture-eval-etsy/gate-6/cs-infrastructure"
+  },
+
+  "telegram": {
+    "bot_token_env": "TELEGRAM_BOT_TOKEN",
+    "escalation_chat_ids_env": "TELEGRAM_ESCALATION_CHAT_IDS",
+    "escalation_chat_ids_default": ["8295330880"]
+  },
+
+  "buckets": {
+    "A": {"name": "Download & Access", "escalate": false},
+    "B": {"name": "Product Misunderstanding", "escalate": false},
+    "C": {"name": "Refund/Return", "escalate": true},
+    "D": {"name": "File Completeness", "escalate": false},
+    "E": {"name": "Customisation", "escalate": false},
+    "F": {"name": "Billing", "escalate": true},
+    "G": {"name": "Multilingual/Market", "escalate": false},
+    "UNMATCHED": {"name": "Unmatched / Unknown", "escalate": true}
+  },
+
+  "constraints": {
+    "max_response_length": 500,
+    "must_use_template": true,
+    "never_promise_refunds": true,
+    "never_skip_logging": true,
+    "language": "en-GB"
+  },
+
+  "etsy": {
+    "shop_name": "RecoveriStudio",
+    "markets": 7,
+    "product_type": "digital"
+  }
+}

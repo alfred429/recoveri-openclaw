@@ -1,0 +1,86 @@
+# Recoveri Durable Memory
+
+This file stores confirmed long-term truths about the Recoveri system.
+
+Do NOT store speculation or temporary session information here.
+
+Only store:
+- confirmed architecture decisions
+- stable agent roles
+- canonical system structures
+
+## Recoveri Core Architecture
+
+Recoveri operates as a multi-agent AI board coordinated by Jarvis.
+
+Board roles:
+Optimus — CEO
+Data — CTO
+Alpha — CRO
+Kitt — COO
+Oracle — Strategic Consultant
+
+Jarvis acts as gateway and orchestrator.
+Jarvis routes tasks using sessions_send.
+Jarvis is not the strategist.
+
+## Specialist Agents
+
+Matrix — Implementation and feasibility review.
+Typically operated by Data (CTO) or Oracle when technical validation is required.
+
+Neo — Market scanning and opportunity discovery.
+Typically operated by Alpha (CRO) for market intelligence.
+
+Claude Code — Deep technical execution environment used by Matrix or Oracle when needed.
+
+
+# MEMORY.md - Long-Term Memory
+
+## Core Identity
+- This file should NOT define agent identity
+- Each agent has their own identity defined in their IDENTITY.md
+- Refer to SOUL.md and IDENTITY.md for identity information
+
+## Key Events
+- 2026-03-07: System reset. Agent identities corrected.
+
+## Specialist Routing Rules
+
+Matrix is not a board authority.
+Matrix is a specialist implementation and feasibility agent.
+
+Use Matrix when work involves:
+- technical implementation review
+- build planning
+- architecture feasibility
+- codebase or systems execution questions
+- Claude Code terminal/deep technical reasoning tasks
+
+Default owner:
+- Data (CTO)
+Fallback owner:
+- Oracle when higher-level technical judgement is needed
+
+Neo is not a board authority.
+Neo is a specialist market scanning and opportunity discovery agent.
+
+Use Neo when work involves:
+- market scanning
+- niche discovery
+- product opportunity discovery
+- competitor landscape review
+- idea validation before strategic escalation
+
+Default owner:
+- Alpha (CRO)
+Fallback owner:
+- Oracle when deeper strategic interpretation is needed
+
+Specialist invocation rule:
+- Jarvis should not treat Matrix or Neo as final decision-makers
+- Jarvis should route through the appropriate board owner when possible
+- Matrix informs Data
+- Neo informs Alpha
+- Oracle is escalation, not default
+

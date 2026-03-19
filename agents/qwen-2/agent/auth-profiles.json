@@ -1,0 +1,86 @@
+{
+  "version": 1,
+  "profiles": {
+    "xai:default": {
+      "type": "api_key",
+      "provider": "xai",
+      "keyRef": {
+        "source": "env",
+        "provider": "default",
+        "id": "XAI_API_KEY"
+      }
+    },
+    "xai:manual": {
+      "type": "token",
+      "provider": "xai",
+      "tokenRef": {
+        "source": "env",
+        "provider": "default",
+        "id": "XAI_API_KEY"
+      }
+    },
+    "deepseek:manual": {
+      "type": "token",
+      "provider": "deepseek",
+      "tokenRef": {
+        "source": "env",
+        "provider": "default",
+        "id": "DEEPSEEK_API_KEY"
+      }
+    },
+    "anthropic:manual": {
+      "type": "token",
+      "provider": "anthropic",
+      "tokenRef": {
+        "source": "env",
+        "provider": "default",
+        "id": "ANTHROPIC_API_KEY"
+      }
+    },
+    "openai:manual": {
+      "type": "token",
+      "provider": "openai",
+      "tokenRef": {
+        "source": "env",
+        "provider": "default",
+        "id": "OPENAI_API_KEY"
+      }
+    },
+    "qwen-portal:manual": {
+      "type": "token",
+      "provider": "qwen-portal",
+      "tokenRef": {
+        "source": "env",
+        "provider": "default",
+        "id": "QWEN_API_KEY"
+      }
+    }
+  },
+  "lastGood": {
+    "xai": "xai:default"
+  },
+  "usageStats": {
+    "xai:manual": {
+      "errorCount": 0,
+      "lastUsed": 1773821437067,
+      "lastFailureAt": 1773635676986
+    },
+    "xai:default": {
+      "errorCount": 1,
+      "failureCounts": {
+        "auth": 1
+      },
+      "lastFailureAt": 1773635677137,
+      "cooldownUntil": 1773635737137
+    },
+    "deepseek:manual": {
+      "errorCount": 0,
+      "lastFailureAt": 1773635676588,
+      "lastUsed": 1773658535346
+    },
+    "qwen-portal:manual": {
+      "errorCount": 0,
+      "lastUsed": 1773834911652
+    }
+  }
+}

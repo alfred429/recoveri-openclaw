@@ -1,0 +1,50 @@
+def create_debt_tracker_page(c):
+    """Create debt payoff tracker page"""
+    draw_header(c, "Debt Payoff Plan")
+    
+    # Instructions
+    c.setFillColor(COLOR_TEXT)
+    c.setFont("Helvetica", 9)
+    c.drawString(MARGIN, PAGE_HEIGHT - MARGIN - 40, "Choose snowball (smallest first) or avalanche (highest interest first) method.")
+    
+    # Debt table
+    debt_data = [
+        ["Creditor", "Balance", "Interest %", "Min Payment", "Target Payoff"],
+        ["Credit Card", "£__________", "____%", "£______", "___/___/____"],
+        ["Student Loan", "£__________", "____%", "£______", "___/___/____"],
+        ["Car Loan", "£__________", "____%", "£______", "___/___/____"],
+        ["Personal Loan", "£__________", "____%", "£______", "___/___/____"],
+        ["Other", "£__________", "____%", "£______", "___/___/____"],
+        ["TOTAL DEBT", "£__________", "", "£__________", ""]
+    ]
+    
+    debt_table = Table(debt_data, colWidths=[CONTENT_WIDTH * 0.22, CONTENT_WIDTH * 0.18, CONTENT_WIDTH * 0.15, CONTENT_WIDTH * 0.18, CONTENT_WIDTH * 0.27])
+    debt_table.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), COLOR_ACCENT),
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
+        ('BACKGROUND', (0, 6), (-1, 6), COLOR_SECONDARY),
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('FONTNAME', (0, 6), (-1, 6), 'Helvetica-Bold'),
+        ('FONTSIZE', (0, 0), (-1, -1), 8),
+        ('GRID', (0, 0), (-1, -1), 0.5, COLOR_SECONDARY),
+    ]))
+    
+    debt_table.wrapOn(c, CONTENT_WIDTH, PAGE_HEIGHT)
+    debt_table.drawOn(c, MARGIN, PAGE_HEIGHT - MARGIN - 150)
+    
+    # Payoff strategy
+    c.setFont("Helvetica-Bold", 11)
+    c.drawString(MARGIN, PAGE_HEIGHT - MARGIN - 200, "Payoff Strategy:")
+    
+    strategies = [
+        "☐ Snowball Method: Pay minimums on all, extra on smallest balance",
+        "☐ Avalanche Method: Pay minimums on all, extra on highest interest",
+        "☐ Custom: _________________________________________________"
+    ]
+    
+    y_pos = PAGE_HEIGHT - MARGIN - 220
+    for strategy in strategies:
+        c.setFont("Helvetica", 9)
+        c.drawString(MARGIN, y_pos, strategy)
+        y_pos -= 20

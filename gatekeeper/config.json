@@ -1,0 +1,35 @@
+{
+  "version": "1.0",
+  "paths": {
+    "log_dir": "/root/gatekeeper/log/",
+    "request_register": "/root/request-register/",
+    "shared_repository": "/root/shared-repository/"
+  },
+  "output_validation": {
+    "min_word_count_document": 50,
+    "min_word_count_jsonl": 10,
+    "max_duplicate_similarity": 0.8
+  },
+  "timing_thresholds": {
+    "deep_research": 120,
+    "brand_design": 60,
+    "legal_review": 45,
+    "content_generation": 15,
+    "data_analysis": 30,
+    "signal_scan": 5,
+    "routing_decision": 1,
+    "status_update": 1,
+    "default": 10
+  },
+  "source_validation": {
+    "min_keyword_match_ratio": 0.3
+  },
+  "schema_validation": {
+    "placeholder_patterns": ["TBD", "TODO", "INSERT", "PLACEHOLDER", "Lorem ipsum", "[insert", "[add"]
+  },
+  "quality_validation": {
+    "max_avg_sentence_length": 60,
+    "min_paragraph_breaks_per_1000_words": 3,
+    "max_template_similarity": 0.8
+  }
+}

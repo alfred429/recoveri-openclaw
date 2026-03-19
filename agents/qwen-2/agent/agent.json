@@ -1,0 +1,14 @@
+{
+  "model": {
+    "primary": "qwen/qwen3.5-122b-a10b",
+    "fallbacks": [
+      "qwen/qwen3.5-flash"
+    ]
+  },
+  "role": "research",
+  "report_to": "consultant-agent",
+  "report_to_name": "Oracle (Consultant)",
+  "soul_file": "SOUL.md",
+  "constitution": "../../workspace/shared/ENTERPRISE_SOUL.md",
+  "gatekeeper": "/root/gatekeeper/run_all.py"
+}

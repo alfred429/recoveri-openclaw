@@ -1,0 +1,37 @@
+# Recoveri Decision Log
+
+This file records important architectural and operational decisions.
+
+Each entry should include:
+- decision
+- reason
+- impacted systems
+- owner
+- date
+
+## 2026-03-12 — Alpha market scan completed
+
+Decision:
+Alpha completed a market scan for quick-launch digital product niches.
+
+Reason:
+Identify low-friction, high-potential digital products for Recoveri portfolio launches.
+
+Key findings:
+1. UK Small Business Starter Pack
+2. Notion Productivity Templates
+3. AI Prompt Library
+
+Impacted systems:
+- Neo routing
+- Alpha CRO execution workflow
+- RECOVERI Board Telegram reporting
+
+Owner:
+Alpha (CRO)
+
+Status:
+Analysis complete. Launch decision pending.
+
+Next action:
+Board to decide first launch product.

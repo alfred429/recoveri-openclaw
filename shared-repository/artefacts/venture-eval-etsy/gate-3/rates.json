@@ -1,0 +1,131 @@
+{
+  "agent_rates": {
+    "CRON_FREE": {
+      "description": "No token cost - 1M tokens/day free tier",
+      "hourly_rate_gbp": 0,
+      "tokens_per_month_estimate": 30000000,
+      "agents": [
+        "Qwen-1 (Alpha)",
+        "Qwen-2",
+        "Oracle (basic queries)"
+      ]
+    },
+    "LOCAL_FREE": {
+      "description": "Zero-cost via Mac Mini inference",
+      "hourly_rate_gbp": 0,
+      "hardware_cost_gbp": 0,
+      "agents": [
+        "Data Agent"
+      ]
+    },
+    "CONSULTANT": {
+      "description": "Oracle deep research ceiling",
+      "hourly_rate_gbp": 67,
+      "monthly_ceiling_usd": 27,
+      "agents": [
+        "Oracle (CC)"
+      ]
+    },
+    "C-LEVEL": {
+      "description": "Strategic oversight & decision gates",
+      "hourly_rate_gbp": 150,
+      "agents": [
+        "Optimus (CEO)",
+        "CRO-agent",
+        "Neo"
+      ]
+    }
+  },
+  "venture_ebay_etsy_allocation": {
+    "task_name": "Gate 3 Execution Planning - Etsy Digital Products",
+    "total_agent_hours_projected": 85,
+    "breakdown": {
+      "alpha_qwen1": {
+        "hours": 25,
+        "rate_gbp": 0,
+        "total_cost_gbp": 0,
+        "tasks": ["Product brief creation", "Listing copywriting", "SEO optimization"]
+      },
+      "data_agent": {
+        "hours": 50,
+        "rate_gbp": 0,
+        "total_cost_gbp": 0,
+        "tasks": ["Mockup generation", "PDF exports", "Template creation"]
+      },
+      "qwen1_shop_manager": {
+        "hours": 33,
+        "rate_gbp": 0,
+        "total_cost_gbp": 0,
+        "tasks": ["Etsy listing publishing", "Ads management", "Customer service"]
+      },
+      "oracle_consultant": {
+        "hours": 4,
+        "rate_gbp": 67,
+        "total_cost_gbp": 268,
+        "tasks": ["Competitor analysis", "Market gap identification"]
+      },
+      "cro_agent_clevel": {
+        "hours": 4,
+        "rate_gbp": 150,
+        "total_cost_gbp": 600,
+        "tasks": ["Weekly financial reviews", "ROI tracking", "Budget monitoring"]
+      },
+      "optimus_ceo": {
+        "hours": 2,
+        "rate_gbp": 150,
+        "total_cost_gbp": 300,
+        "tasks": ["Bi-weekly milestone approvals", "Pivot decisions"]
+      }
+    },
+    "summary": {
+      "total_agent_hours": 118,
+      "cron_free_hours": 108,
+      "consultant_hours": 4,
+      "c_level_hours": 6,
+      "total_agent_cost_gbp": 1168,
+      "tools_infrastructure_cost_gbp_annual": 159,
+      "grand_total_cost_gbp_annual": 1327
+    }
+  },
+  "cost_notes": [
+    "Agent costs calculated at Recoveri standard rates (see /root/cost-tracking/rates.json)",
+    "CRON_FREE agents (Qwen-1, Alpha, Data) use zero-cost tiers - only time allocated for planning purposes",
+    "Consultant Oracle rate: £67/hr capped at $27/month (~£21)",
+    "C-LEVEL includes Optimus/Neo/CRO-agent at £150/hr strategic oversight",
+    "Actual Year 1 tooling costs: £159 (Canva Pro + Etsy fees)",
+    "Grand total including all agent time allocation: £1,327 vs conservative revenue £50k = 3,673% ROI",
+    "This differs from Gate 2 business case (£1,494) because that excluded C-LEVEL/Consultant overhead from internal labor accounting"
+  ],
+  "billing_schedule": {
+    "Etsy_listing_fees": {
+      "frequency": "per-listing",
+      "amount_gbp": 0.16,
+      "renewal_trigger": "on-sale-or-4-months"
+    },
+    "canva_pro": {
+      "frequency": "monthly",
+      "amount_gbp": 12,
+      "anniversary_discount_note": "Annual plan ~£114 available but not needed initially"
+    },
+    "eth_ads_budget": {
+      "frequency": "daily",
+      "amount_gbp": 5,
+      "auto_pause_threshold_gbp_monthly": 150
+    },
+    "payment_processing": {
+      "frequency": "per-transaction",
+      "structure": "~3% + £0.20 embedded in revenue calculation"
+    }
+  },
+  "roi_calculation": {
+    "conservative_revenue_year_1_gbp": 50000,
+    "total_costs_gbp": 1327,
+    "net_profit_gbp": 48673,
+    "roi_percentage": 3667,
+    "payback_period_days": 4,
+    "monthly_breakeven_units_at_premium_price_7gbp": 35
+  },
+  "version": "1.0",
+  "created_date": "2026-03-18",
+  "author": "Alpha Qwen-1 (CRON_FREE Operations Worker)"
+}

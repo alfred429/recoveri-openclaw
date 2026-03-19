@@ -1,0 +1,60 @@
+{
+  "version": "1.0.0",
+  "service": "neo-email-handler",
+  "description": "Neo email workflow — PDF review packs for Boss",
+
+  "email": {
+    "to": "mike@recoveri.io",
+    "from": "alfred@recoveri.io",
+    "reply_to": "alfred@recoveri.io",
+    "signature": "-- Neo (CoS)\nvia Arthur (alfred@recoveri.io)"
+  },
+
+  "tiers": {
+    "1": {
+      "name": "per-req-completion",
+      "trigger": "req_completed",
+      "subject_template": "[RECOVERI] REQ-{req_id}: {title} — Ready for Review",
+      "enabled": true
+    },
+    "2": {
+      "name": "nightly-digest",
+      "trigger": "cron",
+      "schedule_utc": "21:00",
+      "subject_template": "[RECOVERI] Evening Review Pack — {count} items pending",
+      "dedup_window_hours": 4,
+      "enabled": true
+    },
+    "3": {
+      "name": "morning-approvals",
+      "trigger": "cron",
+      "schedule_utc": "07:00",
+      "subject_template": "[RECOVERI] Morning Approvals — {count} skill proposals",
+      "enabled": false,
+      "enable_condition": "swarm6_live"
+    }
+  },
+
+  "paths": {
+    "shared_repository": "/root/shared-repository",
+    "request_register": "/root/shared-repository/data/requests/register.jsonl",
+    "approval_register": "/root/shared-repository/data/approvals/register.jsonl",
+    "proposal_dir": "/root/shared-repository/data/swarm-feedback/proposals",
+    "email_log": "/root/shared-repository/data/neo-email/sent.jsonl",
+    "pdf_output_dir": "/root/shared-repository/data/neo-email/pdfs",
+    "pending_review_dir": "/root/shared-repository/artefacts"
+  },
+
+  "pdf": {
+    "engine": "weasyprint",
+    "page_size": "A4",
+    "footer_text": "RECOVERI — Confidential"
+  },
+
+  "constraints": {
+    "max_attachments_per_email": 10,
+    "max_attachment_size_mb": 25,
+    "never_send_empty_digest": true,
+    "skip_internal_routing_reqs": true
+  }
+}
