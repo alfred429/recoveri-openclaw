@@ -35,6 +35,13 @@ DATA_PATHS = {
     "gatekeeper_log": os.environ.get("GATEKEEPER_LOG_PATH", "/root/gatekeeper/log/validations.jsonl"),
     "hardcode_scan": os.environ.get("HARDCODE_SCAN_PATH", "/root/gatekeeper/log/"),
     "cs_pipeline": os.environ.get("CS_PIPELINE_PATH", "/root/shared-repository/data/cs-pipeline/tickets.jsonl"),
+    "agent_activity": os.environ.get("AGENT_ACTIVITY_PATH", "/root/shared-repository/governance/agent-activity.jsonl"),
+    "research_etsy": os.environ.get("RESEARCH_ETSY_PATH", "/root/shared-repository/data/etsy-scanner/"),
+    "research_trends": os.environ.get("RESEARCH_TRENDS_PATH", "/root/shared-repository/data/google-trends/"),
+    "research_hn": os.environ.get("RESEARCH_HN_PATH", "/root/shared-repository/data/hackernews/"),
+    "research_rss": os.environ.get("RESEARCH_RSS_PATH", "/root/shared-repository/data/rss-news/"),
+    "research_ai": os.environ.get("RESEARCH_AI_PATH", "/root/shared-repository/data/ai-trends/"),
+    "trading_loop": os.environ.get("TRADING_LOOP_PATH", "/root/loop-logs/"),
 }
 STATIC_DIR = "/root/dashboard/public"
 
@@ -452,43 +459,161 @@ def handle_insights():
 
 
 def handle_cron():
+    """Read crontab and return structured job list."""
     try:
-        result = subprocess.run(
-            ["openclaw", "cron", "list", "--json"],
-            capture_output=True, text=True, timeout=15
-        )
-        output = result.stdout.strip()
-        lines = output.split("\n")
-        json_lines = []
-        in_json = False
+        result = subprocess.run(["crontab", "-l"], capture_output=True, text=True, timeout=10)
+        lines = result.stdout.strip().split("\n")
+        jobs = []
+        comment_buffer = ""
         for line in lines:
-            stripped = line.strip()
-            if stripped.startswith("[") and not any(
-                stripped.startswith(f"[{tag}]") for tag in
-                ("plugins", "lcm", "debug", "info", "warn", "error", "log")
-            ):
-                in_json = True
-            if stripped.startswith("{"):
-                in_json = True
-            if in_json:
-                json_lines.append(line)
-        clean_output = "\n".join(json_lines) if json_lines else output
-        try:
-            cron_data = json.loads(clean_output)
-        except json.JSONDecodeError:
-            match = re.search(r'(\[.*\]|\{.*\})', output, re.DOTALL)
-            if match:
-                cron_data = json.loads(match.group(1))
-            else:
-                return ok_response({"raw_output": output, "jobs": []},
-                                   note="Could not parse cron output as JSON")
-        return ok_response({"jobs": cron_data if isinstance(cron_data, list) else [cron_data]})
-    except FileNotFoundError:
-        return ok_response({"jobs": []}, note="openclaw command not found")
-    except subprocess.TimeoutExpired:
-        return ok_response({"jobs": []}, note="openclaw cron list timed out")
+            line = line.strip()
+            if line.startswith("#"):
+                # Store comment as name for next job
+                comment_buffer = line.lstrip("# ").split("—")[0].strip()
+                continue
+            if not line:
+                continue
+            parts = line.split(None, 5)
+            if len(parts) >= 6:
+                schedule = " ".join(parts[:5])
+                command = parts[5]
+                # Extract script name
+                script = command.split("/")[-1].split(" ")[0] if "/" in command else command
+                name = comment_buffer if comment_buffer else script
+                # Determine status by checking if output file exists for today
+                status = "active"
+                last_run = None
+                jobs.append({
+                    "name": name,
+                    "schedule": schedule,
+                    "command": command,
+                    "script": script,
+                    "status": status,
+                    "last_run": last_run,
+                })
+                comment_buffer = ""
+        return ok_response({"jobs": jobs, "total": len(jobs)})
     except Exception as e:
-        return ok_response({"jobs": []}, note=f"cron error: {str(e)}")
+        return ok_response({"jobs": [], "total": 0}, note=f"cron error: {str(e)}")
+
+
+def handle_agent_activity():
+    """Agent activity tracker — reads from governance/agent-activity.jsonl."""
+    activity_path = os.environ.get("AGENT_ACTIVITY_PATH",
+                                    "/root/shared-repository/governance/agent-activity.jsonl")
+    entries = []
+    if os.path.isfile(activity_path):
+        with open(activity_path) as f:
+            for line in f:
+                line = line.strip()
+                if line:
+                    try:
+                        entries.append(json.loads(line))
+                    except json.JSONDecodeError:
+                        pass
+
+    # Get latest status per agent
+    agent_latest = {}
+    for e in entries:
+        agent = e.get("agent", "Unknown")
+        agent_latest[agent] = e
+
+    # Classify agents by status
+    now = datetime.now(timezone.utc)
+    agents_summary = []
+    for agent, entry in agent_latest.items():
+        ts_str = entry.get("timestamp", "")
+        try:
+            ts = datetime.fromisoformat(ts_str.replace("Z", "+00:00"))
+            hours_ago = (now - ts).total_seconds() / 3600
+        except Exception:
+            hours_ago = 999
+
+        status = entry.get("status", "UNKNOWN")
+        color = "green"
+        if status == "FAILED":
+            color = "red"
+        elif status == "IDLE" and hours_ago > 4:
+            color = "red"
+        elif status == "IDLE":
+            color = "amber"
+        elif status == "IN_PROGRESS":
+            color = "blue"
+
+        agents_summary.append({
+            "agent": agent,
+            "last_action": entry.get("action", "UNKNOWN"),
+            "description": entry.get("description", ""),
+            "task_id": entry.get("task_id", ""),
+            "pillar": entry.get("pillar", ""),
+            "status": status,
+            "timestamp": ts_str,
+            "hours_ago": round(hours_ago, 1),
+            "color": color
+        })
+
+    agents_summary.sort(key=lambda x: x.get("timestamp", ""), reverse=True)
+
+    return ok_response({
+        "agents": agents_summary,
+        "total_entries": len(entries),
+        "agents_tracked": len(agent_latest)
+    })
+
+
+def handle_research():
+    """Aggregate research data from all cron-produced sources."""
+    research_dirs = {
+        "rss_news": "/root/shared-repository/data/rss-news/",
+        "hackernews": "/root/shared-repository/data/hackernews/",
+        "ai_trends": "/root/shared-repository/data/ai-trends/",
+        "market_intel": "/root/shared-repository/data/market-intel/raw/",
+        "etsy_scanner": "/root/shared-repository/data/etsy-scanner/",
+        "google_trends": "/root/shared-repository/data/google-trends/"
+    }
+
+    result = {}
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+
+    for source, dirpath in research_dirs.items():
+        if not os.path.isdir(dirpath):
+            result[source] = {"status": "NO_DATA", "records": 0, "latest_file": None}
+            continue
+
+        files = sorted(glob.glob(os.path.join(dirpath, f"*{today}*")))
+        if not files:
+            files = sorted(glob.glob(os.path.join(dirpath, "*.jsonl")))
+
+        if not files:
+            result[source] = {"status": "NO_DATA", "records": 0, "latest_file": None}
+            continue
+
+        latest = files[-1]
+        records = 0
+        try:
+            with open(latest) as f:
+                for line in f:
+                    if line.strip():
+                        records += 1
+        except Exception:
+            pass
+
+        result[source] = {
+            "status": "ACTIVE",
+            "records": records,
+            "latest_file": os.path.basename(latest),
+            "file_size": os.path.getsize(latest),
+            "modified": datetime.fromtimestamp(
+                os.path.getmtime(latest), tz=timezone.utc
+            ).isoformat()
+        }
+
+    active = sum(1 for v in result.values() if v["status"] == "ACTIVE")
+    return ok_response({
+        "sources": result,
+        "active_sources": active,
+        "total_sources": len(result)
+    })
 
 
 def handle_overview():
@@ -712,6 +837,19 @@ def handle_overview():
 
     # Swarm status
     summary["swarm_status"] = "PHASE_1_APPROVED"
+
+    # Agent activity summary
+    try:
+        aa = handle_agent_activity()
+        aa_data = aa.get("data", {})
+        summary["agent_activity"] = {
+            "total_agents": aa_data.get("total", 0),
+            "active": aa_data.get("active", 0),
+            "failed": aa_data.get("failed", 0),
+            "idle_over_4h": aa_data.get("idle_over_4h", 0),
+        }
+    except Exception:
+        summary["agent_activity"] = {"total_agents": 0, "active": 0, "failed": 0, "idle_over_4h": 0}
 
     # Compute overall
     if "RED" in badges.values():
@@ -1199,6 +1337,95 @@ def handle_pillar_traders():
 # Route table
 # ---------------------------------------------------------------------------
 
+
+def handle_agent_activity():
+    """Return agent activity tracker data."""
+    path = DATA_PATHS["agent_activity"]
+    entries = read_jsonl(path) if os.path.exists(path) else []
+    now = datetime.now(timezone.utc)
+    agents = {}
+    for e in entries:
+        agent = e.get("agent", "unknown")
+        # Keep latest entry per agent
+        if agent not in agents or e.get("timestamp", "") > agents[agent].get("timestamp", ""):
+            agents[agent] = e
+    # Calculate time since last action
+    agent_list = []
+    for name, data in sorted(agents.items()):
+        ts = data.get("timestamp")
+        hours_idle = None
+        if ts:
+            try:
+                last = datetime.fromisoformat(ts.replace("Z", "+00:00"))
+                hours_idle = round((now - last).total_seconds() / 3600, 1)
+            except Exception:
+                pass
+        rag = "GREEN"
+        if data.get("status") == "FAILED":
+            rag = "RED"
+        elif hours_idle and hours_idle > 4:
+            rag = "RED"
+        elif hours_idle and hours_idle > 2:
+            rag = "AMBER"
+        agent_list.append({
+            "agent": name,
+            "last_action": data.get("action"),
+            "description": data.get("description"),
+            "status": data.get("status"),
+            "timestamp": ts,
+            "hours_since": hours_idle,
+            "rag": rag,
+            "pillar": data.get("pillar"),
+        })
+    failed = sum(1 for a in agent_list if a["status"] == "FAILED")
+    idle_4h = sum(1 for a in agent_list if (a.get("hours_since") or 0) > 4)
+    return ok_response({
+        "agents": agent_list,
+        "total": len(agent_list),
+        "failed": failed,
+        "idle_over_4h": idle_4h,
+        "active": sum(1 for a in agent_list if a["status"] in ("ACTIVE", "COMPLETE", "IN_PROGRESS")),
+    })
+
+def handle_research(source):
+    """Generic research data endpoint."""
+    dir_map = {
+        "etsy-scanner": DATA_PATHS.get("research_etsy", ""),
+        "trends": DATA_PATHS.get("research_trends", ""),
+        "news": None,  # Aggregate
+    }
+    now = datetime.now(timezone.utc)
+    date_str = now.strftime("%Y-%m-%d")
+    
+    if source == "news":
+        # Aggregate HN + RSS + AI
+        results = {"sources": {}}
+        for name, key in [("hackernews", "research_hn"), ("rss", "research_rss"), ("ai_trends", "research_ai")]:
+            d = DATA_PATHS.get(key, "")
+            files = sorted(glob.glob(os.path.join(d, f"*-{date_str}.jsonl"))) if d else []
+            entries = []
+            for fp in files:
+                entries.extend(read_jsonl(fp))
+            results["sources"][name] = {
+                "records_today": len(entries),
+                "latest": entries[-1] if entries else None,
+            }
+        results["total_sources"] = len(results["sources"])
+        return ok_response(results)
+    
+    d = dir_map.get(source, "")
+    if not d:
+        return ok_response({"error": f"Unknown research source: {source}"})
+    files = sorted(glob.glob(os.path.join(d, f"*-{date_str}.jsonl")))
+    entries = []
+    for fp in files:
+        entries.extend(read_jsonl(fp))
+    return ok_response({
+        "source": source,
+        "records_today": len(entries),
+        "entries": entries[-10:],
+    })
+
 ROUTES = {
     "/api/health": handle_health,
     "/api/operations": handle_operations,
@@ -1227,6 +1454,10 @@ ROUTES = {
     "/api/pillars/core": handle_pillar_core,
     "/api/pillars/social": handle_pillar_social,
     "/api/pillars/traders": handle_pillar_traders,
+    "/api/agent-activity": handle_agent_activity,
+    "/api/research/etsy-scanner": lambda: handle_research("etsy-scanner"),
+    "/api/research/trends": lambda: handle_research("trends"),
+    "/api/research/news": lambda: handle_research("news"),
 }
 
 
