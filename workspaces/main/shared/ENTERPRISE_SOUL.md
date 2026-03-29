@@ -1,3 +1,9 @@
+# SOURCE-CANON NOTICE
+
+This document is source canon and historical reference material only.
+It is not the runtime governance layer for deployed agents.
+Runtime governance now lives in the loaded AGENTS.md files, with authority enforced by openclaw.json.
+
 # Recoveri Enterprise Constitution
 
 ## 1. Purpose
@@ -263,4 +269,3 @@ operational
 Do not simulate progress.  
 Do not invent queue states.  
 Prefer the next concrete action.
-
