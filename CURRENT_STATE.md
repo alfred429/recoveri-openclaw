@@ -96,3 +96,27 @@ Rule: If it is not in an auto-loaded workspace-root file, it is not runtime gove
 - 1,821 unrotated cron output files
 - Old user-level systemd unit has inline secrets
 - governance-sync manifest has 9 legacy task-router lines
+
+
+## Late Session Updates - 29 March evening
+
+### Dashboard and Auth
+- ops.altior.one live with HTTPS - Let s Encrypt production cert
+- board.craab.io also serving HTTPS
+- Google OAuth migrated to Web application client - Recoveri Board
+- Credentials in OpenClaw secret manager - dashboard-google.env
+- altior-dashboard.service wired to new env file
+- Dashboard route split intentional: 18803 auth catch-all, 8901 v2 APIs no auth yet
+
+### Security Cleanup - Sprint 1
+- 6 secret-bearing backup files archived to security-archive
+- 3 stale user-scope services disabled
+- Mozart retired workspace archived and removed
+- Gateway systemd unit: zero inline secrets
+- nftables: ports 22/80/443 opened and persisted
+- Hetzner cloud firewall: SSH/HTTP/HTTPS rules applied
+
+### Backlog Status
+- P1: EMPTY - first time since 24 March
+- Cadence, escalation standard, scoreboard moved to P3
+- Next focus: P2 stability items
