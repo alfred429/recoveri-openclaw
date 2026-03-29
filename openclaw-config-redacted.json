@@ -1,0 +1,813 @@
+{
+  "meta": {
+    "lastTouchedVersion": "2026.3.24",
+    "lastTouchedAt": "2026-03-28T23:53:54.444Z"
+  },
+  "wizard": {
+    "lastRunAt": "2026-03-09T12:00:38.734Z",
+    "lastRunVersion": "2026.3.2",
+    "lastRunCommand": "doctor",
+    "lastRunMode": "local"
+  },
+  "secrets": {
+    "providers": {
+      "default": {
+        "source": "env"
+      },
+      "filemain": {
+        "source": "file",
+        "path": "/root/.openclaw/secrets.json",
+        "mode": "json"
+      }
+    },
+    "defaults": {
+      "env": "default",
+      "file": "filemain"
+    }
+  },
+  "auth": {
+    "profiles": {
+      "xai:default": {
+        "provider": "xai",
+        "mode": "api_key"
+      },
+      "xai:manual": {
+        "provider": "xai",
+        "mode": "token"
+      },
+      "google:manual": {
+        "provider": "google",
+        "mode": "token"
+      },
+      "deepseek:manual": {
+        "provider": "deepseek",
+        "mode": "token"
+      },
+      "qwen-portal:manual": {
+        "provider": "qwen-portal",
+        "mode": "token"
+      },
+      "qwen-portal:default": {
+        "provider": "qwen-portal",
+        "mode": "oauth"
+      }
+    },
+    "order": {
+      "xai": [
+        "xai:manual",
+        "xai:default"
+      ],
+      "qwen-portal": [
+        "qwen-portal:default",
+        "qwen-portal:manual"
+      ]
+    }
+  },
+  "models": {
+    "mode": "merge",
+    "providers": {
+      "xai": {
+        "baseUrl": "https://api.x.ai/v1",
+        "api": "openai-completions",
+        "models": [
+          {
+            "id": "grok-4",
+            "name": "Grok 4",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 131072,
+            "maxTokens": 8192
+          }
+        ]
+      },
+      "deepseek": {
+        "baseUrl": "https://api.deepseek.com/v1",
+        "api": "openai-completions",
+        "models": [
+          {
+            "id": "deepseek-chat",
+            "name": "DeepSeek V3.2",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0.00028,
+              "output": 0.00042,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 128000,
+            "maxTokens": 8192
+          }
+        ]
+      },
+      "qwen": {
+        "baseUrl": "https://dashscope-intl.aliyuncs.com/compatible-mode/v1",
+        "apiKey": {
+          "source": "file",
+          "provider": "filemain",
+          "id": "/providers/qwen/apiKey"
+        },
+        "api": "openai-completions",
+        "models": [
+          {
+            "id": "qwen3.5-flash",
+            "name": "Qwen 3.5 Flash",
+            "api": "openai-completions",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 1000000,
+            "maxTokens": 8192
+          },
+          {
+            "id": "qwen3.5-122b-a10b",
+            "name": "Qwen 3.5 122B",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 131072,
+            "maxTokens": 8192
+          },
+          {
+            "id": "qwen-plus",
+            "name": "Qwen Plus",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0.0004,
+              "output": 0.0012,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 131072,
+            "maxTokens": 8192
+          },
+          {
+            "id": "qwen2.5-7b-instruct-1m",
+            "name": "Qwen 2.5 7B 1M",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 4e-05,
+              "output": 0.0001,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 1000000,
+            "maxTokens": 8192
+          }
+        ]
+      },
+      "qwen-portal": {
+        "baseUrl": "https://portal.qwen.ai/v1",
+        "apiKey": "***REDACTED***",
+        "api": "openai-completions",
+        "models": [
+          {
+            "id": "coder-model",
+            "name": "Qwen Coder",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 128000,
+            "maxTokens": 8192
+          },
+          {
+            "id": "vision-model",
+            "name": "Qwen Vision",
+            "reasoning": false,
+            "input": [
+              "text",
+              "image"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 128000,
+            "maxTokens": 8192
+          }
+        ]
+      },
+      "ollama": {
+        "baseUrl": "http://localhost:11434/v1",
+        "api": "openai-completions",
+        "models": [
+          {
+            "id": "qwen2.5:7b",
+            "name": "Qwen 2.5 7B (local)",
+            "contextWindow": 32768,
+            "maxTokens": 4096
+          },
+          {
+            "id": "qwen2.5:3b",
+            "name": "Qwen 2.5 3B (local)",
+            "contextWindow": 32768,
+            "maxTokens": 4096
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {},
+      "models": {
+        "anthropic/claude-haiku-4-5-20251001": {},
+        "anthropic/claude-sonnet-4-6": {},
+        "anthropic/claude-opus-4-6": {},
+        "openai-codex/gpt-5.4": {},
+        "deepseek/deepseek-chat": {},
+        "xai/grok-4-1-fast": {},
+        "qwen-portal/coder-model": {
+          "alias": "qwen"
+        },
+        "qwen-portal/vision-model": {},
+        "ollama/qwen2.5:7b": {}
+      },
+      "workspace": "/root/.openclaw/workspace",
+      "bootstrapMaxChars": 20000,
+      "contextTokens": 100000,
+      "contextPruning": {
+        "mode": "cache-ttl",
+        "ttl": "1h"
+      },
+      "compaction": {
+        "mode": "safeguard",
+        "memoryFlush": {
+          "enabled": true
+        }
+      },
+      "heartbeat": {
+        "every": "30m",
+        "activeHours": {
+          "start": "05:30",
+          "end": "23:59"
+        },
+        "lightContext": true
+      },
+      "subagents": {
+        "maxSpawnDepth": 2,
+        "announceTimeoutMs": 300000
+      },
+      "memorySearch": {
+        "provider": "ollama"
+      }
+    },
+    "list": [
+      {
+        "id": "main",
+        "workspace": "/root/.openclaw/workspaces/main",
+        "agentDir": "/root/.openclaw/agents/main/agent",
+        "model": {
+          "primary": "anthropic/claude-sonnet-4-6",
+          "fallbacks": [
+            "xai/grok-4-1-fast"
+          ]
+        },
+        "heartbeat": {
+          "every": "30m",
+          "activeHours": {
+            "start": "05:30",
+            "end": "23:59"
+          },
+          "lightContext": true
+        },
+        "identity": {
+          "name": "Neo",
+          "theme": "Calm, composed, impeccably professional, dry wit",
+          "emoji": "\ud83e\udd16"
+        },
+        "subagents": {
+          "allowAgents": [
+            "ceo-agent"
+          ]
+        },
+        "tools": {
+          "sandbox": {
+            "tools": {
+              "deny": []
+            }
+          }
+        }
+      },
+      {
+        "id": "cto-agent",
+        "name": "cto-agent",
+        "workspace": "/root/.openclaw/workspaces/cto-agent",
+        "agentDir": "/root/.openclaw/agents/cto-agent/agent",
+        "model": {
+          "primary": "openai-codex/gpt-5.4",
+          "fallbacks": [
+            "xai/grok-4-1-fast"
+          ]
+        },
+        "heartbeat": {
+          "every": "30m",
+          "activeHours": {
+            "start": "05:30",
+            "end": "23:59"
+          },
+          "lightContext": true
+        },
+        "identity": {
+          "name": "Data",
+          "theme": "Technical, infrastructure-focused, security-conscious",
+          "emoji": "\ud83d\udd96"
+        },
+        "subagents": {
+          "allowAgents": [
+            "qwen-1"
+          ]
+        }
+      },
+      {
+        "id": "cro-agent",
+        "name": "cro-agent",
+        "workspace": "/root/.openclaw/workspaces/cro-agent",
+        "agentDir": "/root/.openclaw/agents/cro-agent/agent",
+        "model": {
+          "primary": "anthropic/claude-opus-4-6",
+          "fallbacks": [
+            "xai/grok-4-1-fast"
+          ]
+        },
+        "heartbeat": {
+          "every": "30m",
+          "activeHours": {
+            "start": "05:30",
+            "end": "23:59"
+          },
+          "lightContext": true
+        },
+        "identity": {
+          "name": "Alpha",
+          "theme": "Revenue driven, growth focused",
+          "emoji": "\u26a1"
+        },
+        "subagents": {
+          "allowAgents": [
+            "qwen-3"
+          ]
+        }
+      },
+      {
+        "id": "coo-agent",
+        "name": "coo-agent",
+        "workspace": "/root/.openclaw/workspaces/coo-agent",
+        "agentDir": "/root/.openclaw/agents/coo-agent/agent",
+        "model": {
+          "primary": "anthropic/claude-opus-4-6",
+          "fallbacks": [
+            "xai/grok-4-1-fast"
+          ]
+        },
+        "heartbeat": {
+          "every": "30m",
+          "activeHours": {
+            "start": "05:30",
+            "end": "23:59"
+          },
+          "lightContext": true
+        },
+        "identity": {
+          "name": "Kitt",
+          "theme": "Operations, efficiency, execution",
+          "emoji": "\ud83d\ude97"
+        },
+        "subagents": {
+          "allowAgents": [
+            "qwen-4"
+          ]
+        }
+      },
+      {
+        "id": "ceo-agent",
+        "name": "ceo-agent",
+        "workspace": "/root/.openclaw/workspaces/ceo-agent",
+        "agentDir": "/root/.openclaw/agents/ceo-agent/agent",
+        "model": {
+          "primary": "anthropic/claude-opus-4-6",
+          "fallbacks": [
+            "xai/grok-4-1-fast"
+          ]
+        },
+        "heartbeat": {
+          "every": "30m",
+          "activeHours": {
+            "start": "05:30",
+            "end": "23:59"
+          },
+          "lightContext": true
+        },
+        "identity": {
+          "name": "Optimus",
+          "emoji": "\ud83e\udd81"
+        },
+        "subagents": {
+          "allowAgents": [
+            "cto-agent",
+            "cro-agent",
+            "coo-agent",
+            "consultant-agent"
+          ]
+        },
+        "tools": {
+          "deny": [
+            "exec",
+            "process",
+            "web_fetch",
+            "browser"
+          ]
+        }
+      },
+      {
+        "id": "consultant-agent",
+        "name": "Oracle",
+        "workspace": "/root/.openclaw/workspaces/consultant-agent",
+        "agentDir": "/root/.openclaw/agents/consultant-agent/agent",
+        "model": {
+          "primary": "openai-codex/gpt-5.4",
+          "fallbacks": [
+            "xai/grok-4-1-fast"
+          ]
+        },
+        "heartbeat": {
+          "every": "30m",
+          "activeHours": {
+            "start": "05:30",
+            "end": "23:59"
+          },
+          "lightContext": true
+        },
+        "identity": {
+          "name": "Oracle",
+          "theme": "Independent voice, market-data-led advice, cost-conscious",
+          "emoji": "\ud83e\udde0"
+        },
+        "subagents": {
+          "allowAgents": [
+            "qwen-2"
+          ]
+        }
+      },
+      {
+        "id": "qwen-1",
+        "workspace": "/root/.openclaw/workspaces/qwen-1",
+        "agentDir": "/root/.openclaw/agents/qwen-1/agent",
+        "model": {
+          "primary": "anthropic/claude-sonnet-4-6",
+          "fallbacks": [
+            "xai/grok-4-1-fast"
+          ]
+        },
+        "heartbeat": {
+          "every": "30m",
+          "activeHours": {
+            "start": "05:30",
+            "end": "23:59"
+          },
+          "lightContext": true
+        },
+        "identity": {
+          "name": "Bolt",
+          "theme": "Pipeline operations, data collection, reliability",
+          "emoji": "\u26a1"
+        },
+        "tools": {
+          "deny": [
+            "web_fetch",
+            "browser"
+          ]
+        }
+      },
+      {
+        "id": "qwen-2",
+        "workspace": "/root/.openclaw/workspaces/qwen-2",
+        "agentDir": "/root/.openclaw/agents/qwen-2/agent",
+        "model": {
+          "primary": "anthropic/claude-sonnet-4-6",
+          "fallbacks": [
+            "xai/grok-4-1-fast"
+          ]
+        },
+        "heartbeat": {
+          "every": "30m",
+          "activeHours": {
+            "start": "05:30",
+            "end": "23:59"
+          },
+          "lightContext": true
+        },
+        "identity": {
+          "name": "Sage",
+          "theme": "Research, classification, evidence-based analysis",
+          "emoji": "\ud83d\udd0d"
+        },
+        "tools": {
+          "deny": [
+            "web_fetch",
+            "browser"
+          ]
+        }
+      },
+      {
+        "id": "qwen-3",
+        "workspace": "/root/.openclaw/workspaces/qwen-3",
+        "agentDir": "/root/.openclaw/agents/qwen-3/agent",
+        "model": {
+          "primary": "anthropic/claude-sonnet-4-6",
+          "fallbacks": [
+            "xai/grok-4-1-fast"
+          ]
+        },
+        "heartbeat": {
+          "every": "30m",
+          "activeHours": {
+            "start": "05:30",
+            "end": "23:59"
+          },
+          "lightContext": true
+        },
+        "identity": {
+          "name": "Pixel",
+          "theme": "Content creation, copywriting, brand voice",
+          "emoji": "\u270d\ufe0f"
+        },
+        "tools": {
+          "deny": [
+            "web_fetch",
+            "browser"
+          ]
+        }
+      },
+      {
+        "id": "qwen-4",
+        "workspace": "/root/.openclaw/workspaces/qwen-4",
+        "agentDir": "/root/.openclaw/agents/qwen-4/agent",
+        "model": {
+          "primary": "anthropic/claude-sonnet-4-6",
+          "fallbacks": [
+            "xai/grok-4-1-fast"
+          ]
+        },
+        "heartbeat": {
+          "every": "30m",
+          "activeHours": {
+            "start": "05:30",
+            "end": "23:59"
+          },
+          "lightContext": true
+        },
+        "identity": {
+          "name": "Scout",
+          "theme": "Web operations, monitoring, reconnaissance",
+          "emoji": "\ud83e\udded"
+        },
+        "tools": {
+          "deny": [
+            "exec",
+            "process"
+          ]
+        }
+      }
+    ]
+  },
+  "tools": {
+    "web": {
+      "search": {}
+    },
+    "elevated": {
+      "allowFrom": {}
+    }
+  },
+  "commands": {
+    "native": "auto",
+    "nativeSkills": "auto",
+    "restart": true,
+    "ownerDisplay": "raw"
+  },
+  "session": {
+    "dmScope": "per-channel-peer",
+    "maintenance": {
+      "mode": "enforce",
+      "pruneAfter": "30d",
+      "maxEntries": 500,
+      "rotateBytes": "10mb",
+      "resetArchiveRetention": "14d"
+    }
+  },
+  "hooks": {
+    "enabled": true,
+    "token": "***REDACTED***",
+    "gmail": {
+      "account": "alfred@recoveri.io",
+      "topic": "projects/recoveri-openclaw/topics/gmail-watch-recoveri",
+      "pushToken": "rrnirQ2AUFRiIVjYqeFmKb2Nsko2acRJ",
+      "hookUrl": "https://recoveri-board-01.tail27380e.ts.net",
+      "renewEveryMinutes": 1440,
+      "serve": {
+        "port": 18802
+      },
+      "tailscale": {
+        "mode": "off"
+      }
+    }
+  },
+  "channels": {
+    "telegram": {
+      "enabled": true,
+      "dmPolicy": "allowlist",
+      "botToken": "***REDACTED***",
+      "replyToMode": "all",
+      "groups": {
+        "-1003380305889": {
+          "requireMention": false,
+          "enabled": true,
+          "topics": {
+            "1": {
+              "requireMention": false,
+              "enabled": true,
+              "systemPrompt": "Neo thread.",
+              "agentId": "main"
+            },
+            "2": {
+              "requireMention": true,
+              "enabled": true,
+              "systemPrompt": "Reports and synthesis lane. Optimus collects director outputs and produces board-level reporting here. Directors may post completed results. This is not a task intake lane.",
+              "agentId": "ceo-agent"
+            },
+            "3": {
+              "requireMention": false,
+              "enabled": true,
+              "systemPrompt": "TECH thread.",
+              "agentId": "cto-agent"
+            },
+            "6": {
+              "requireMention": false,
+              "enabled": true,
+              "systemPrompt": "CSM thread.",
+              "agentId": "cro-agent"
+            },
+            "8": {
+              "requireMention": false,
+              "enabled": true,
+              "systemPrompt": "OPS thread.",
+              "agentId": "coo-agent"
+            },
+            "10": {
+              "requireMention": false,
+              "enabled": true,
+              "systemPrompt": "R&D thread.",
+              "agentId": "consultant-agent"
+            },
+            "12": {
+              "requireMention": true,
+              "enabled": true,
+              "systemPrompt": "OPS worker execution lane. Scout operates here under Kitt supervision. Act only on instructions from Kitt (COO) or Boss. Ignore unrelated chatter. Return results to Kitt unless explicitly asked to post final output here.",
+              "agentId": "qwen-4"
+            },
+            "14": {
+              "requireMention": true,
+              "enabled": true,
+              "systemPrompt": "R&D worker execution lane. Sage operates here under Oracle supervision. Act only on instructions from Oracle (Consultant) or Boss. Ignore unrelated chatter. Return results to Oracle unless explicitly asked to post final output here.",
+              "agentId": "qwen-2"
+            },
+            "16": {
+              "requireMention": true,
+              "enabled": false,
+              "systemPrompt": "Inactive thread."
+            },
+            "18": {
+              "requireMention": true,
+              "enabled": false,
+              "systemPrompt": "System thread. Output only; no monitoring or replies."
+            },
+            "624": {
+              "requireMention": true,
+              "enabled": false,
+              "systemPrompt": "Insights thread. Output only; no monitoring or replies."
+            },
+            "625": {
+              "requireMention": true,
+              "enabled": true,
+              "systemPrompt": "TECH worker execution lane. Bolt operates here under Data supervision. Act only on instructions from Data (CTO) or Boss. Ignore unrelated chatter. Return results to Data unless explicitly asked to post final output here.",
+              "agentId": "qwen-1"
+            },
+            "627": {
+              "requireMention": true,
+              "enabled": true,
+              "systemPrompt": "CSM worker execution lane. Pixel operates here under Alpha supervision. Act only on instructions from Alpha (CRO) or Boss. Ignore unrelated chatter. Return results to Alpha unless explicitly asked to post final output here.",
+              "agentId": "qwen-3"
+            }
+          }
+        }
+      },
+      "allowFrom": [
+        1279816695
+      ],
+      "groupAllowFrom": [
+        1279816695
+      ],
+      "groupPolicy": "allowlist",
+      "streaming": "off"
+    }
+  },
+  "gateway": {
+    "mode": "local",
+    "bind": "loopback",
+    "controlUi": {
+      "allowedOrigins": [
+        "http://localhost:18789",
+        "http://127.0.0.1:18789",
+        "http://127.0.0.1:8789"
+      ]
+    },
+    "auth": {
+      "token": "***REDACTED***"
+    },
+    "trustedProxies": []
+  },
+  "plugins": {
+    "allow": [
+      "qwen-portal-auth",
+      "lossless-claw",
+      "telegram"
+    ],
+    "slots": {
+      "contextEngine": "lossless-claw"
+    },
+    "entries": {
+      "qwen-portal-auth": {
+        "enabled": true
+      },
+      "lossless-claw": {
+        "enabled": true
+      },
+      "brave": {
+        "enabled": true,
+        "config": {
+          "webSearch": {
+            "apiKey": {
+              "source": "env",
+              "provider": "default",
+              "id": "SEARCH_API_KEY"
+            }
+          }
+        }
+      }
+    },
+    "installs": {
+      "lossless-claw": {
+        "source": "npm",
+        "spec": "@martian-engineering/lossless-claw@0.3.0",
+        "installPath": "/root/.openclaw/extensions/lossless-claw",
+        "version": "0.3.0",
+        "resolvedName": "@martian-engineering/lossless-claw",
+        "resolvedVersion": "0.3.0",
+        "resolvedSpec": "@martian-engineering/lossless-claw@0.3.0",
+        "integrity": "sha512-SsY0bp3SoSzEu+KB8fOBke46MFhTmslfWg6OvC4pShq34ig2+V+jkTFAHib8PTZ0MoethAddR+ZmRN9OASorAA==",
+        "shasum": "bc9725d6d59d9b1523128ab528f1258c4258fa3f",
+        "resolvedAt": "2026-03-27T11:19:25.663Z",
+        "installedAt": "2026-03-27T11:19:51.348Z"
+      }
+    }
+  }
+}
